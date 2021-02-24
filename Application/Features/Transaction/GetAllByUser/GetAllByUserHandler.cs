@@ -44,8 +44,8 @@ namespace Application.Features.Transaction.GetAllByUser
 			var result = dbQuery.Select(x => new TransactionResponse()
 			{
 				DateOperation = x.Transaction.OperationDate,
-				CorrespondentName = x.Transaction.UserId == user.Id ?  x.Transaction.User.DisplayName : x.Transaction.ReceiverUser.DisplayName,
-				TransactionAmount = x.Amount,
+				CorrespondentName = x.Transaction.ReceiverUserId == user.Id ? x.Transaction.User.DisplayName : x.Transaction.ReceiverUser.DisplayName,
+				TransactionAmount = x.Transaction.ReceiverUserId == user.Id ? x.Amount : -x.Amount,
 				ResultingBalance = x.FinalBalance
 			});
 			

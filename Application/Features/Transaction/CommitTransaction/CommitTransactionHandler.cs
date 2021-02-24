@@ -26,23 +26,27 @@ namespace Application.Features.Transaction.CommitTransaction
 			_mapper = mapper;
 		}
 		
-		public async Task<bool> Handle(CommitTransactionCommand query, CancellationToken cancellationToken)
+		public async Task<bool> Handle(CommitTransactionCommand command, CancellationToken cancellationToken)
 		{
-			var user = await _userManager.FindByEmailAsync(query.UserEmail);
+			var user = await _userManager.FindByEmailAsync(command.UserEmail);
 
-			if (user.Balance < query.Amount)
+			if (user.Balance < command.Amount)
 			{
 				throw new RestException(HttpStatusCode.BadRequest, new { exception = "Not enough PW to commit transaction" });
 			}
 			
-			if (user.Id == query.ReceiverUserId)
+			if (user.Id == command.ReceiverUserId)
 			{
 				throw new RestException(HttpStatusCode.BadRequest, new { exception = "You can't transfer PW to your account" });
 			}
 
-			var transaction = _mapper.Map<Domain.Entities.Transaction>(query);
-			transaction.UserId = user.Id;
-			transaction.OperationDate = DateTime.Now;
+			var transaction = new Domain.Entities.Transaction()
+			{
+				ReceiverUserId = command.ReceiverUserId,
+				Amount = command.Amount,
+				UserId = user.Id,
+				OperationDate = DateTime.Now
+			};
 			_context.Transactions.Add(transaction);
 
 			user.Balance -= transaction.Amount;
