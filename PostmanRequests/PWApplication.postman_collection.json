@@ -1,0 +1,277 @@
+{
+	"info": {
+		"_postman_id": "a01d44d9-d984-4d20-8657-e6bf123fc5e6",
+		"name": "PWApplication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"viktor@test.com\",\r\n    \"password\":\"p@sswW1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/user/login",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "registration",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set(\"token\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"displayName\":\"Viktor Pr\",\r\n    \"email\":\"viktor@test.com\",\r\n    \"password\":\"p@sswW1\",\r\n    \"password2\":\"p@sswW1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/user/registration",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "userInfo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/user/userInfo/",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"userInfo",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "searchByName",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/user/searchByName?DisplayName=kt",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"user",
+						"searchByName"
+					],
+					"query": [
+						{
+							"key": "DisplayName",
+							"value": "kt"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "checkAmount",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/transaction/checkAmount?Amount=200",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"transaction",
+						"checkAmount"
+					],
+					"query": [
+						{
+							"key": "Amount",
+							"value": "200"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "commitTransaction",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ReceiverUserId\":\"c7a3ad54-01ce-4b49-ba69-9055f8225c3f\",\r\n    \"Amount\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{apiUrl}}/api/transaction",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"transaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "transactions/getAll",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{apiUrl}}/api/transaction/",
+					"host": [
+						"{{apiUrl}}"
+					],
+					"path": [
+						"api",
+						"transaction",
+						""
+					],
+					"query": [
+						{
+							"key": "DateOperation",
+							"value": "2021-02-24",
+							"disabled": true
+						},
+						{
+							"key": "CorrespondentName",
+							"value": "V",
+							"disabled": true
+						},
+						{
+							"key": "TransactionAmount",
+							"value": "100",
+							"disabled": true
+						},
+						{
+							"key": "SortColumn",
+							"value": "DateOperation",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
