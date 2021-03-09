@@ -89,13 +89,25 @@ namespace API
 			services.AddTransient<IValidator<RegistrationCommand>, RegistrationValidation>();
 			services.AddTransient<IValidator<CheckTransactionQuery>, CheckTransactionValidation>();
 			services.AddTransient<IValidator<CommitTransactionCommand>, CommitTransactionValidation>();
+			
+			services.AddCors(options =>
+			{
+				options.AddDefaultPolicy(buildr =>
+				{
+					buildr.WithOrigins("http://localhost:4200");
+					buildr.AllowAnyMethod();
+					buildr.AllowAnyHeader();
+					buildr.AllowCredentials();
+				});
+			});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
             app.UseMiddleware<ErrorHandlingMiddleware>();
             app.UseAuthentication();
+            app.UseCors();
             app.UseMvcWithDefaultRoute();
-        }
+		}
     }
 }

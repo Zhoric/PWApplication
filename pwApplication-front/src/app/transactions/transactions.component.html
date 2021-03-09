@@ -1,0 +1,40 @@
+<!--<div class="container">-->
+<!--  <header class="jumbotron">-->
+<!--    <ul class="transactions">-->
+<!--      <li *ngFor="let transaction of transactions">-->
+<!--        <span class="badge">{{transaction.correspondentName}}</span> {{transaction.transactionAmount}}  {{transaction.dateOperation}}-->
+<!--        {{transaction.resultingBalance}}-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </header>-->
+<!--</div>-->
+
+<div class="container">
+<h1>Transaction history</h1>
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <td>Correspondent Name</td>
+    <td>Amount</td>
+    <td>Date</td>
+    <td>Result Balance</td>
+    <td></td>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let transaction of transactions">
+    <ng-template [ngTemplateOutlet]="readOnlyTemplate"
+                 [ngTemplateOutletContext]="{ $implicit: transaction}">
+    </ng-template>
+  </tr>
+  </tbody>
+</table>
+<!--<div>{{statusMessage}}</div>-->
+</div>
+
+<ng-template #readOnlyTemplate let-transaction>
+  <td>{{transaction.correspondentName}}</td>
+  <td>{{transaction.transactionAmount}}</td>
+  <td>{{transaction.dateOperation}}</td>
+  <td>{{transaction.resultingBalance}}</td>
+</ng-template>
